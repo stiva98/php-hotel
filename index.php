@@ -41,6 +41,7 @@
     ];
 
     $filterParking=$_GET['filterParking'] ?? 'off';
+    $filterVote=$_GET['filterVote'] ?? '0';
 
 ?>
 
@@ -73,7 +74,7 @@
             <tbody>
                 <?php
                     foreach ($hotels as $index => $hotel) {
-                        if ($filterParking == 'off' || $hotel['parking']) {    
+                        if (($filterParking == 'off' || $hotel['parking']) && $hotel['vote'] >= $filterVote) {    
                 ?>
                     <tr>
                         <th scope="row"><?php echo $index; ?></th>
@@ -95,6 +96,14 @@
         </table>
         <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
             <form action="index.php" method="get">
+                <select class="form-select mb-3" aria-label="Default select example" name="filterVote">
+                    <option <?php echo $filterVote == '0' ? 'selected' : ''; ?> value="0">Scegli il tuo hotel in base al voto</option>
+                    <option <?php echo $filterVote == '1' ? 'selected' : ''; ?> value="1">1</option>
+                    <option <?php echo $filterVote == '2' ? 'selected' : ''; ?> value="2">2</option>
+                    <option <?php echo $filterVote == '3' ? 'selected' : ''; ?> value="3">3</option>
+                    <option <?php echo $filterVote == '4' ? 'selected' : ''; ?> value="4">4</option>
+                    <option <?php echo $filterVote == '5' ? 'selected' : ''; ?> value="5">5</option>
+                </select>
                 <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" name="filterParking" <?php if ($filterParking == 'on') {
                     echo 'checked';
                 } ?>>
